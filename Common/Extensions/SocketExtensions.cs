@@ -640,15 +640,15 @@ namespace Media.Common.Extensions.Socket
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         internal static void SetTcpOption(System.Net.Sockets.Socket socket, System.Net.Sockets.SocketOptionName name, int value)
         {
-            /*if (Common.Extensions.OperatingSystemExtensions.IsWindows) */socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.Tcp, name, value);
-            //else SetSocketOption_internal 
+            ///*if (Common.Extensions.OperatingSystemExtensions.IsWindows) */socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.Tcp, name, value);
+            ////else SetSocketOption_internal 
         }
 
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         internal static void GetTcpOption(System.Net.Sockets.Socket socket, System.Net.Sockets.SocketOptionName name, byte[] buffer)
         {
-            /*if (Common.Extensions.OperatingSystemExtensions.IsWindows) */socket.GetSocketOption(System.Net.Sockets.SocketOptionLevel.Tcp, name, buffer);
-            //else SetSocketOption_internal 
+            ///*if (Common.Extensions.OperatingSystemExtensions.IsWindows) */socket.GetSocketOption(System.Net.Sockets.SocketOptionLevel.Tcp, name, buffer);
+            ////else SetSocketOption_internal 
         }
 
         //Todo, to eliminate local static allocations a ArrayPool is needed or a ThreadSafe buffering implementation

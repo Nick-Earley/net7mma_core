@@ -3901,56 +3901,70 @@ a=appversion:1.0");
 
             Concepts.Classes.Program.WriteTest();
 
-            System.Console.WriteLine(Concepts.Hardware.PlatformRtdsc.GetTimestampUnsigned());
+            try
+            {
+                System.Console.WriteLine(Concepts.Hardware.PlatformRtdsc.GetTimestampUnsigned());
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine("Exception with PlatformRtdsc.GetTimestampUnsigned(): " + ex);
+            }
 
             if (false == Concepts.Hardware.Intrinsics.CpuId.IsSupported()) System.Console.WriteLine("Hardware.Intrinsics Not Supported!");
             else
             {
-                System.Console.WriteLine("CpuId VendorString: " + Concepts.Hardware.Intrinsics.CpuId.GetVendorString());
-
-                System.Console.WriteLine("Concepts.Classes.CentralProcessingUnit->GetVendor: " + Concepts.Classes.CentralProcessingUnit.GetVendor(Concepts.Hardware.Intrinsics.CpuId.GetVendorString()));
-
-                System.Console.WriteLine("CpuId ProcessorBrandString: " + Concepts.Hardware.Intrinsics.CpuId.GetProcessorBrandString());
-
-                System.Console.WriteLine("CpuId MaximumFeatureLevel: " + Concepts.Hardware.Intrinsics.CpuId.GetMaximumFeatureLevel());
-
-                System.Console.WriteLine("CpuId MaximumExtendedFeatureLevel: " + Concepts.Hardware.Intrinsics.CpuId.GetMaximumExtendedFeatureLevel());
-
-                System.Console.WriteLine("CpuId ThreadsPerCore: " + Concepts.Hardware.Intrinsics.CpuId.GetThreadsPerCore());
-
-                System.Console.WriteLine("CpuId GetLogicalCores: " + Concepts.Hardware.Intrinsics.CpuId.GetLogicalCores());
-
-                System.Console.WriteLine("CpuId GetPhysicalCores: " + Concepts.Hardware.Intrinsics.CpuId.GetPhysicalCores());
-
-                System.Console.WriteLine("CpuId GetStepping: " + Concepts.Hardware.Intrinsics.CpuId.GetStepping());
-
-                //
-
-                System.Console.WriteLine("CpuId GetFamilyModel: " + Concepts.Hardware.Intrinsics.CpuId.GetModelFamily());
-
-                System.Console.WriteLine("CpuId GetFamily: " + Concepts.Hardware.Intrinsics.CpuId.GetFamily());
-
-                System.Console.WriteLine("CpuId GetModel: " + Concepts.Hardware.Intrinsics.CpuId.GetModel());
-
-                //
-
-                //
-
-                System.Console.WriteLine("CpuId GetExtendedModelFamily: " + Concepts.Hardware.Intrinsics.CpuId.GetExtendedModelFamily());
-
-                System.Console.WriteLine("CpuId GetExtendedModel: " + Concepts.Hardware.Intrinsics.CpuId.GetExtendedModel());
-
-                System.Console.WriteLine("CpuId GetExtendedFamily: " + Concepts.Hardware.Intrinsics.CpuId.GetExtendedFamily());
-
-                //
-
-                System.Console.WriteLine("CpuId GetDisplayModel: " + Concepts.Hardware.Intrinsics.CpuId.GetDisplayModel());
-
-                System.Console.WriteLine("CpuId GetDisplayFamily: " + Concepts.Hardware.Intrinsics.CpuId.GetDisplayFamily());
-
-                foreach (var feature in Concepts.Hardware.Intrinsics.CpuId.GetSupportedFeatures())
+                try
                 {
-                    System.Console.WriteLine("Supports Features: " + feature);
+                    System.Console.WriteLine("CpuId VendorString: " + Concepts.Hardware.Intrinsics.CpuId.GetVendorString());
+
+                    System.Console.WriteLine("Concepts.Classes.CentralProcessingUnit->GetVendor: " + Concepts.Classes.CentralProcessingUnit.GetVendor(Concepts.Hardware.Intrinsics.CpuId.GetVendorString()));
+
+                    System.Console.WriteLine("CpuId ProcessorBrandString: " + Concepts.Hardware.Intrinsics.CpuId.GetProcessorBrandString());
+
+                    System.Console.WriteLine("CpuId MaximumFeatureLevel: " + Concepts.Hardware.Intrinsics.CpuId.GetMaximumFeatureLevel());
+
+                    System.Console.WriteLine("CpuId MaximumExtendedFeatureLevel: " + Concepts.Hardware.Intrinsics.CpuId.GetMaximumExtendedFeatureLevel());
+
+                    System.Console.WriteLine("CpuId ThreadsPerCore: " + Concepts.Hardware.Intrinsics.CpuId.GetThreadsPerCore());
+
+                    System.Console.WriteLine("CpuId GetLogicalCores: " + Concepts.Hardware.Intrinsics.CpuId.GetLogicalCores());
+
+                    System.Console.WriteLine("CpuId GetPhysicalCores: " + Concepts.Hardware.Intrinsics.CpuId.GetPhysicalCores());
+
+                    System.Console.WriteLine("CpuId GetStepping: " + Concepts.Hardware.Intrinsics.CpuId.GetStepping());
+
+                    //
+
+                    System.Console.WriteLine("CpuId GetFamilyModel: " + Concepts.Hardware.Intrinsics.CpuId.GetModelFamily());
+
+                    System.Console.WriteLine("CpuId GetFamily: " + Concepts.Hardware.Intrinsics.CpuId.GetFamily());
+
+                    System.Console.WriteLine("CpuId GetModel: " + Concepts.Hardware.Intrinsics.CpuId.GetModel());
+
+                    //
+
+                    //
+
+                    System.Console.WriteLine("CpuId GetExtendedModelFamily: " + Concepts.Hardware.Intrinsics.CpuId.GetExtendedModelFamily());
+
+                    System.Console.WriteLine("CpuId GetExtendedModel: " + Concepts.Hardware.Intrinsics.CpuId.GetExtendedModel());
+
+                    System.Console.WriteLine("CpuId GetExtendedFamily: " + Concepts.Hardware.Intrinsics.CpuId.GetExtendedFamily());
+
+                    //
+
+                    System.Console.WriteLine("CpuId GetDisplayModel: " + Concepts.Hardware.Intrinsics.CpuId.GetDisplayModel());
+
+                    System.Console.WriteLine("CpuId GetDisplayFamily: " + Concepts.Hardware.Intrinsics.CpuId.GetDisplayFamily());
+
+                    foreach (var feature in Concepts.Hardware.Intrinsics.CpuId.GetSupportedFeatures())
+                    {
+                        System.Console.WriteLine("Supports Features: " + feature);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Console.WriteLine("Exception with Intrinsics.CpuId: " + ex);
                 }
 
                 //---
@@ -3959,67 +3973,89 @@ a=appversion:1.0");
 
                 System.Console.WriteLine("Rtdsc GetTimestampUnsigned: " + Concepts.Hardware.Intrinsics.Rtdsc.GetTimestampUnsigned());
 
-                using (var rtdsc = new Concepts.Hardware.Intrinsics.Rtdsc())
+                try
                 {
-                    System.Console.WriteLine("Rtdsc InvokeUnsigned: " + rtdsc.ReadTimestampCounter());
+                    using (var rtdsc = new Concepts.Hardware.Intrinsics.Rtdsc())
+                    {
+                        System.Console.WriteLine("Rtdsc InvokeUnsigned: " + rtdsc.ReadTimestampCounter());
 
-                    System.Console.WriteLine("Rtdsc NativeInvoke: " + rtdsc.ReadTimestampCounterUnsigned());
+                        System.Console.WriteLine("Rtdsc NativeInvoke: " + rtdsc.ReadTimestampCounterUnsigned());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Console.WriteLine("Exception with Intrinsics.Rtdsc(): " + ex);
                 }
 
                 //---
 
-                using (var rdrand = new Concepts.Hardware.Intrinsics.Rdrand())
+                try
                 {
-                    System.Console.WriteLine("Rdrand GenerateRandom: " + rdrand.GenerateRandom());
+                    using (var rdrand = new Concepts.Hardware.Intrinsics.Rdrand())
+                    {
+                        System.Console.WriteLine("Rdrand GenerateRandom: " + rdrand.GenerateRandom());
 
-                    System.Console.WriteLine("Rdrand GenerateRandom: " + rdrand.GenerateRandom());
+                        System.Console.WriteLine("Rdrand GenerateRandom: " + rdrand.GenerateRandom());
 
-                    System.Console.WriteLine("Rdrand GenerateRandom: " + rdrand.GenerateRandom());
+                        System.Console.WriteLine("Rdrand GenerateRandom: " + rdrand.GenerateRandom());
+
+
+                        System.Console.WriteLine("Rdrand GetRandom63: " + Concepts.Hardware.Intrinsics.Rdrand.GetRandom63());
+
+                        System.Console.WriteLine("Rdrand GetRandom64: " + Concepts.Hardware.Intrinsics.Rdrand.GetRandom64());
+
+                        System.Console.WriteLine("Rdrand GetRandom32: " + Concepts.Hardware.Intrinsics.Rdrand.GetRandom32());
+
+                        System.Console.WriteLine("Rdrand GetRandom31: " + Concepts.Hardware.Intrinsics.Rdrand.GetRandom31());
+
+                        System.Console.WriteLine("Rdrand GetRandom16: " + Concepts.Hardware.Intrinsics.Rdrand.GetRandom16());
+
+                        System.Console.WriteLine("Rdrand GetRandom15: " + Concepts.Hardware.Intrinsics.Rdrand.GetRandom15());
+
+                        System.Console.WriteLine("Rdrand GetRandom8: " + Concepts.Hardware.Intrinsics.Rdrand.GetRandom8());
+
+                        System.Console.WriteLine("Rdrand GetRandom7: " + Concepts.Hardware.Intrinsics.Rdrand.GetRandom7());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Console.WriteLine("Exception with Intrinsics.Rdrand(): " + ex);
                 }
 
-                System.Console.WriteLine("Rdrand GetRandom63: " + Concepts.Hardware.Intrinsics.Rdrand.GetRandom63());
-
-                System.Console.WriteLine("Rdrand GetRandom64: " + Concepts.Hardware.Intrinsics.Rdrand.GetRandom64());
-
-                System.Console.WriteLine("Rdrand GetRandom32: " + Concepts.Hardware.Intrinsics.Rdrand.GetRandom32());
-
-                System.Console.WriteLine("Rdrand GetRandom31: " + Concepts.Hardware.Intrinsics.Rdrand.GetRandom31());
-
-                System.Console.WriteLine("Rdrand GetRandom16: " + Concepts.Hardware.Intrinsics.Rdrand.GetRandom16());
-
-                System.Console.WriteLine("Rdrand GetRandom15: " + Concepts.Hardware.Intrinsics.Rdrand.GetRandom15());
-
-                System.Console.WriteLine("Rdrand GetRandom8: " + Concepts.Hardware.Intrinsics.Rdrand.GetRandom8());
-
-                System.Console.WriteLine("Rdrand GetRandom7: " + Concepts.Hardware.Intrinsics.Rdrand.GetRandom7());
 
                 //---
 
-                using (var rdseed = new Concepts.Hardware.Intrinsics.Rdseed())
+                try
                 {
-                    System.Console.WriteLine("Rdseed GenerateSeed: " + rdseed.GenerateSeed());
+                    using (var rdseed = new Concepts.Hardware.Intrinsics.Rdseed())
+                    {
+                        System.Console.WriteLine("Rdseed GenerateSeed: " + rdseed.GenerateSeed());
 
-                    System.Console.WriteLine("Rdseed GenerateSeed: " + rdseed.GenerateSeed());
+                        System.Console.WriteLine("Rdseed GenerateSeed: " + rdseed.GenerateSeed());
 
-                    System.Console.WriteLine("Rdseed GenerateSeed: " + rdseed.GenerateSeed());
+                        System.Console.WriteLine("Rdseed GenerateSeed: " + rdseed.GenerateSeed());
+
+                        System.Console.WriteLine("Rdseed GetSeed64: " + Concepts.Hardware.Intrinsics.Rdseed.GetSeed64());
+
+                        System.Console.WriteLine("Rdseed GetSeed63: " + Concepts.Hardware.Intrinsics.Rdseed.GetSeed63());
+
+                        System.Console.WriteLine("Rdseed GetSeed32: " + Concepts.Hardware.Intrinsics.Rdseed.GetSeed32());
+
+                        System.Console.WriteLine("Rdseed GetSeed31: " + Concepts.Hardware.Intrinsics.Rdseed.GetSeed31());
+
+                        System.Console.WriteLine("Rdseed GetSeed16: " + Concepts.Hardware.Intrinsics.Rdseed.GetSeed16());
+
+                        System.Console.WriteLine("Rdseed GetSeed15: " + Concepts.Hardware.Intrinsics.Rdseed.GetSeed15());
+
+                        System.Console.WriteLine("Rdseed GetSeed8: " + Concepts.Hardware.Intrinsics.Rdseed.GetSeed8());
+
+                        System.Console.WriteLine("Rdseed GetSeed7: " + Concepts.Hardware.Intrinsics.Rdseed.GetSeed7());
+                    }
                 }
-
-                System.Console.WriteLine("Rdseed GetSeed64: " + Concepts.Hardware.Intrinsics.Rdseed.GetSeed64());
-
-                System.Console.WriteLine("Rdseed GetSeed63: " + Concepts.Hardware.Intrinsics.Rdseed.GetSeed63());
-
-                System.Console.WriteLine("Rdseed GetSeed32: " + Concepts.Hardware.Intrinsics.Rdseed.GetSeed32());
-
-                System.Console.WriteLine("Rdseed GetSeed31: " + Concepts.Hardware.Intrinsics.Rdseed.GetSeed31());
-
-                System.Console.WriteLine("Rdseed GetSeed16: " + Concepts.Hardware.Intrinsics.Rdseed.GetSeed16());
-
-                System.Console.WriteLine("Rdseed GetSeed15: " + Concepts.Hardware.Intrinsics.Rdseed.GetSeed15());
-
-                System.Console.WriteLine("Rdseed GetSeed8: " + Concepts.Hardware.Intrinsics.Rdseed.GetSeed8());
-
-                System.Console.WriteLine("Rdseed GetSeed7: " + Concepts.Hardware.Intrinsics.Rdseed.GetSeed7());
-
+                catch (Exception ex)
+                {
+                    System.Console.WriteLine("Exception with Intrinsics.Rdseed(): " + ex);
+                }
             }
         }
 

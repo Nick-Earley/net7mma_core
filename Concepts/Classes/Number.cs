@@ -1256,14 +1256,14 @@ namespace Media.Concepts.Classes
 
         internal Bitable(__arglist)
         {
-            ArgIterator args = new ArgIterator(__arglist);
+            //ArgIterator args = new ArgIterator(__arglist);
 
-            int count = args.GetRemainingCount();
+            //int count = args.GetRemainingCount();
 
-            while (count > 0)
-            {
-                --count;
-            }
+            //while (count > 0)
+            //{
+            //    --count;
+            //}
         }
 
         unsafe internal Bitable(byte* pointer)

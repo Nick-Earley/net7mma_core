@@ -1390,7 +1390,7 @@ namespace Media.Rtsp
             if (allowPortReuse) Media.Common.Extensions.Exception.ExceptionExtensions.ResumeOnError(() => Media.Common.Extensions.Socket.SocketExtensions.EnableUnicastPortReuse(m_TcpServerSocket));
 
             //Create a thread to handle client connections
-            m_ServerThread = new Thread(new ThreadStart(AcceptLoop), Common.Extensions.Thread.ThreadExtensions.MinimumStackSize);
+            m_ServerThread = new Thread(new ThreadStart(AcceptLoop), Common.Extensions.Thread.ThreadExtensions.DefaultStackSize);
             
             //Configure the thread
             m_ServerThread.Name = ServerName + "@" + m_ServerPort;
@@ -1469,7 +1469,7 @@ namespace Media.Rtsp
 
                         if (IsRunning && m_Maintainer != null) m_Maintainer.Change(TimeSpan.FromTicks(RtspClientInactivityTimeout.Ticks >> 2), Media.Common.Extensions.TimeSpan.TimeSpanExtensions.InfiniteTimeSpan);
 
-                    }), Common.Extensions.Thread.ThreadExtensions.MinimumStackSize)
+                    }), Common.Extensions.Thread.ThreadExtensions.DefaultStackSize)
                     {
                         Priority =  m_ServerThread.Priority,
                         ApartmentState = ApartmentState.MTA
@@ -1580,7 +1580,7 @@ namespace Media.Rtsp
                             if (ex is ThreadAbortException) System.Threading.Thread.ResetAbort();
                         }
 
-                    }, Common.Extensions.Thread.ThreadExtensions.MinimumStackSize)
+                    }, Common.Extensions.Thread.ThreadExtensions.DefaultStackSize)
                     {
                         Priority = ThreadPriority.AboveNormal
                     }.Start();
@@ -1621,7 +1621,7 @@ namespace Media.Rtsp
 
                             if (ex is ThreadAbortException) System.Threading.Thread.ResetAbort();
                         }
-                    }, Common.Extensions.Thread.ThreadExtensions.MinimumStackSize)
+                    }, Common.Extensions.Thread.ThreadExtensions.DefaultStackSize)
                     {
                         Priority = ThreadPriority.AboveNormal
                     }.Start();

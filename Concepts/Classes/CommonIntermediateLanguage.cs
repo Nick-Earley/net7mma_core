@@ -883,7 +883,7 @@ namespace Media.Concepts.Classes
 
              generator = calliMethod.GetILGenerator();
              generator.Emit(System.Reflection.Emit.OpCodes.Ldarg_0); //ptr             
-             generator.EmitCalli(System.Reflection.Emit.OpCodes.Calli, System.Runtime.InteropServices.CallingConvention.StdCall, TypeOfIntPtr, System.Type.EmptyTypes);
+             generator.EmitCalli(System.Reflection.Emit.OpCodes.Calli, (CallingConventions)System.Runtime.InteropServices.CallingConvention.StdCall, TypeOfIntPtr, System.Type.EmptyTypes, System.Type.EmptyTypes);
              generator.Emit(System.Reflection.Emit.OpCodes.Ret);
 
              CallIndirectPointerIntPtr = (System.Func<System.IntPtr, System.IntPtr>)calliMethod.CreateDelegate(typeof(System.Func<System.IntPtr, System.IntPtr>));
@@ -896,7 +896,7 @@ namespace Media.Concepts.Classes
 
              generator = calliMethod.GetILGenerator();
              generator.Emit(System.Reflection.Emit.OpCodes.Ldarg_0); //ptr
-             generator.EmitCalli(System.Reflection.Emit.OpCodes.Calli, System.Runtime.InteropServices.CallingConvention.StdCall, TypeOfVoid, System.Type.EmptyTypes);
+             generator.EmitCalli(System.Reflection.Emit.OpCodes.Calli, (CallingConventions)System.Runtime.InteropServices.CallingConvention.StdCall, TypeOfVoid, System.Type.EmptyTypes, System.Type.EmptyTypes);
              generator.Emit(System.Reflection.Emit.OpCodes.Ret);
 
              CallIndirectPointerStdCall = (System.Action<System.IntPtr>)calliMethod.CreateDelegate(typeof(System.Action<System.IntPtr>));            
@@ -910,7 +910,7 @@ namespace Media.Concepts.Classes
              generator = calliMethod.GetILGenerator();
              generator.Emit(System.Reflection.Emit.OpCodes.Ldarg_0); //ptr
              generator.Emit(System.Reflection.Emit.OpCodes.Conv_I); // Convert to native int, pushing native int on stack.
-             generator.EmitCalli(System.Reflection.Emit.OpCodes.Calli, System.Runtime.InteropServices.CallingConvention.StdCall, typeof(uint), System.Type.EmptyTypes);
+             generator.EmitCalli(System.Reflection.Emit.OpCodes.Calli, (CallingConventions)System.Runtime.InteropServices.CallingConvention.StdCall, typeof(uint), System.Type.EmptyTypes, System.Type.EmptyTypes);
              generator.Emit(System.Reflection.Emit.OpCodes.Ret);
 
              CallIndirectPointerUIntStdCall = (System.Func<System.IntPtr, uint>)calliMethod.CreateDelegate(typeof(System.Func<System.IntPtr, uint>));
@@ -924,7 +924,7 @@ namespace Media.Concepts.Classes
 
              generator = calliMethod.GetILGenerator();
              generator.Emit(System.Reflection.Emit.OpCodes.Ldarg_0); //ptr
-             generator.EmitCalli(System.Reflection.Emit.OpCodes.Calli, System.Runtime.InteropServices.CallingConvention.ThisCall, typeof(ulong), System.Type.EmptyTypes);
+             generator.EmitCalli(System.Reflection.Emit.OpCodes.Calli, (CallingConventions)System.Runtime.InteropServices.CallingConvention.ThisCall, typeof(ulong), System.Type.EmptyTypes, System.Type.EmptyTypes);
              generator.Emit(System.Reflection.Emit.OpCodes.Ret);
 
              CallIndirectPointerULongThisCall = (System.Func<System.IntPtr, ulong>)calliMethod.CreateDelegate(typeof(System.Func<System.IntPtr, ulong>));
@@ -935,7 +935,7 @@ namespace Media.Concepts.Classes
 
              generator = calliMethod.GetILGenerator();
              generator.Emit(System.Reflection.Emit.OpCodes.Ldarg_0); //ptr
-             generator.EmitCalli(System.Reflection.Emit.OpCodes.Calli, System.Runtime.InteropServices.CallingConvention.Cdecl, typeof(ulong), System.Type.EmptyTypes);
+             generator.EmitCalli(System.Reflection.Emit.OpCodes.Calli, (CallingConventions)System.Runtime.InteropServices.CallingConvention.Cdecl, typeof(ulong), System.Type.EmptyTypes, System.Type.EmptyTypes);
              generator.Emit(System.Reflection.Emit.OpCodes.Ret);
 
              CallIndirectPointerULongCdelc = (System.Func<System.IntPtr, ulong>)calliMethod.CreateDelegate(typeof(System.Func<System.IntPtr, ulong>));
@@ -946,7 +946,7 @@ namespace Media.Concepts.Classes
 
              generator = calliMethod.GetILGenerator();
              generator.Emit(System.Reflection.Emit.OpCodes.Ldarg_0); //ptr
-             generator.EmitCalli(System.Reflection.Emit.OpCodes.Calli, System.Runtime.InteropServices.CallingConvention.FastCall, typeof(ulong), System.Type.EmptyTypes);
+             generator.EmitCalli(System.Reflection.Emit.OpCodes.Calli, (CallingConventions)System.Runtime.InteropServices.CallingConvention.FastCall, typeof(ulong), System.Type.EmptyTypes, System.Type.EmptyTypes);
              generator.Emit(System.Reflection.Emit.OpCodes.Ret);
 
              CallIndirectPointerULongFastCall = (System.Func<System.IntPtr, ulong>)calliMethod.CreateDelegate(typeof(System.Func<System.IntPtr, ulong>));
@@ -957,7 +957,7 @@ namespace Media.Concepts.Classes
 
              generator = calliMethod.GetILGenerator();
              generator.Emit(System.Reflection.Emit.OpCodes.Ldarg_0); //ptr
-             generator.EmitCalli(System.Reflection.Emit.OpCodes.Calli, System.Runtime.InteropServices.CallingConvention.StdCall, typeof(ulong), System.Type.EmptyTypes);
+             generator.EmitCalli(System.Reflection.Emit.OpCodes.Calli, (CallingConventions)System.Runtime.InteropServices.CallingConvention.StdCall, typeof(ulong), System.Type.EmptyTypes, System.Type.EmptyTypes);
              generator.Emit(System.Reflection.Emit.OpCodes.Ret);
 
              CallIndirectPointerULongStdCall = (System.Func<System.IntPtr, ulong>)calliMethod.CreateDelegate(typeof(System.Func<System.IntPtr, ulong>));
