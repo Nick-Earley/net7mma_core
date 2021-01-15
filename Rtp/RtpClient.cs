@@ -44,6 +44,7 @@ using Media.Rtcp;
 using System.Net.Sockets;
 using System.Net;
 using System.Threading;
+using Xamarin.Essentials;
 
 //Todo, Provide a RtpConference class or integrate the capability to send and recieve to multiple parties
 
@@ -146,8 +147,14 @@ namespace Media.Rtp
                     //48 is Internetwork Control
                     //56 is Network Control
                     //Set type of service
-
-                    Common.Extensions.Exception.ExceptionExtensions.ResumeOnError(() => socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.TypeOfService, 46));
+                    try
+                    {
+                        Common.Extensions.Exception.ExceptionExtensions.ResumeOnError(() => socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.TypeOfService, 46));
+                    }
+                    catch
+                    {
+                        //TODO Add logging
+                    }
 
                     //Tell the network stack what we send and receive has an order
                     Common.Extensions.Exception.ExceptionExtensions.ResumeOnError(() => socket.DontFragment = true);
@@ -1960,7 +1967,18 @@ namespace Media.Rtp
 
                     RemoteRtp = remoteRtp;
 
-                    RtpSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.DontRoute, true);
+
+                    //RemoteRtcp = m_RtspSocket;
+
+                    try
+                    {
+                        //makes xamiran app socket not connect
+                        //RtpSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.DontRoute, true);
+                    }
+                    catch
+                    {
+                        //TODO Add logging
+                    }
 
                     try
                     {
@@ -1970,10 +1988,18 @@ namespace Media.Rtp
                         //Assign the RemoteRtp EndPoint and Bind the socket to that EndPoint
                         RtpSocket.Connect(RemoteRtp);
                     }
-                    catch
+                    catch (SocketException ex)
                     {
-                        //Can't bind or connect
-                        //Should have logger
+                        if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+                        {
+                            // Connection to internet is available
+                            RtpSocket = TrySocketConnect(RtpSocket, RemoteRtp);
+                        }
+                        //Common.ILoggingExtensions.Log(Logger, "");
+                    }
+                    catch (Exception ex)
+                    {
+                        //Common.ILoggingExtensions.Log(Logger, "");
                     }
 
                     ////Handle Multicast joining (Might need to track interface)
@@ -2023,8 +2049,15 @@ namespace Media.Rtp
 
                         RemoteRtcp = remoteRtcp;
 
-                        RtcpSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.DontRoute, true);
-
+                        try
+                        {
+                            //makes xamiran app socket not connect
+                            //RtcpSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.DontRoute, true);
+                        }
+                        catch
+                        {
+                            //TODO Add logging
+                        }
                         try
                         {
                             //Assign the LocalRtcp EndPoint and Bind the socket to that EndPoint
@@ -2033,9 +2066,18 @@ namespace Media.Rtp
                             //Assign the RemoteRtcp EndPoint and Bind the socket to that EndPoint
                             RtcpSocket.Connect(RemoteRtcp);
                         }
-                        catch
+                        catch (SocketException ex)
                         {
-                            //Can't bind or connect
+                            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+                            {
+                                // Connection to internet is available
+                                RtcpSocket = TrySocketConnect(RtcpSocket, RemoteRtcp);
+                            }
+                            //Common.ILoggingExtensions.Log(Logger, "");
+                        }
+                        catch (Exception ex)
+                        {
+                            //Common.ILoggingExtensions.Log(Logger, "");
                         }
 
                         //Todo, send reports, don't use proprietary messages
@@ -2068,6 +2110,33 @@ namespace Media.Rtp
                 {
                     throw;
                 }
+            }
+
+            public Socket TrySocketConnect(Socket socket, EndPoint endPoint)
+            {
+                    //Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+                    //IPEndPoint ipe = new IPEndPoint(IPAddress.Parse("3.84.6.190"), 0);
+                    //sock.Connect(ipe);
+
+                int i = 0;
+                while (i < 10)
+                {
+                    try
+                    {
+
+                        Thread.Sleep(1000);
+                        socket.Connect(endPoint);
+                        return socket;
+                    }
+                    catch (SocketException ex)
+                    {
+                        i++;
+                        //TrySocketConnect(socket, endPoint);
+                    }
+                }
+                return socket;
+
+                //TODO if socket fails to connect 10 times, cancel process
             }
 
             #region Tcp
@@ -2176,11 +2245,19 @@ namespace Media.Rtp
 
                     if (false.Equals(RtpSocket.Connected))
                     {
-                        try { RtpSocket.Connect(RemoteRtp); }
-                        catch
+                        try
+                        {
+                            RtcpSocket.Connect(RemoteRtcp);
+                        }
+                        catch (SocketException ex)
                         {
                             /*Todo, Only tcp must succeed*/
-                            //HandleConnectionError
+                            //HandleConnectionError                        
+                        }
+                        catch (Exception ex)
+                        {
+                            /*Todo, Only tcp must succeed*/
+                            //HandleConnectionError                        
                         }
                     }
                 }
@@ -2199,11 +2276,20 @@ namespace Media.Rtp
 
                         if (object.ReferenceEquals(LocalRtcp, null).Equals(false) && false.Equals(RtcpSocket.IsBound)) RtcpSocket.Bind(LocalRtcp);
 
-                        if (object.ReferenceEquals(RemoteRtcp, null).Equals(false) && false.Equals(RtcpSocket.Connected)) try { RtcpSocket.Connect(RemoteRtcp); }
-                            catch
+                        if (object.ReferenceEquals(RemoteRtcp, null).Equals(false) && false.Equals(RtcpSocket.Connected))
+                            try
+                            {
+                                RtcpSocket.Connect(RemoteRtcp);
+                            }
+                            catch (SocketException ex)
                             {
                                 /*Todo, Only tcp must succeed*/
-                                //HandleConnectionError
+                                //HandleConnectionError                        
+                            }
+                            catch (Exception ex)
+                            {
+                                /*Todo, Only tcp must succeed*/
+                                //HandleConnectionError                        
                             }
                     }
                     else

@@ -33,6 +33,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
  * 
  * v//
  */
+using System.Net.Sockets;
+
 namespace Media.Rtp
 {
     /// <summary>
@@ -1435,6 +1437,19 @@ namespace Media.Rtp
 
             if (Common.IDisposedExtensions.IsNullOrDisposed(buffer)) buffer = m_Buffer;
 
+            //Force socket to connect if it gets here and is disconnected
+            if (socket.Connected == false)
+            {
+                try
+                {
+                    socket.Connect(remote);
+                }
+                catch (SocketException ex)
+                {
+                    //TODO Error handling
+                }
+            }
+
             //Ensure the socket can poll, should measure against parallel checks with OR
             if (buffer.Count <= 0 | m_StopRequested | object.ReferenceEquals(socket, null) | object.ReferenceEquals(remote, null) | Common.IDisposedExtensions.IsNullOrDisposed(buffer) | Common.IDisposedExtensions.IsNullOrDisposed(this)) return 0;
 
@@ -1493,6 +1508,7 @@ namespace Media.Rtp
             }
             catch (System.Net.Sockets.SocketException se)
             {
+                //TODO Fix timeout on xamiran
                 error = (System.Net.Sockets.SocketError)se.ErrorCode;
             }
             catch (System.Exception ex)

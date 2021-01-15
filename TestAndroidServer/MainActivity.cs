@@ -9,6 +9,9 @@ using Android.Widget;
 using System.Net;
 using Media.Rtsp.Server;
 using Media.Rtsp.Server.MediaTypes;
+using System.Threading;
+using Android.Content;
+using System.Threading.Tasks;
 
 namespace TestAndroidServer
 {
@@ -31,6 +34,22 @@ namespace TestAndroidServer
 
             FloatingActionButton fab2 = FindViewById<FloatingActionButton>(Resource.Id.fab2);
             fab2.Click += Fab2OnClick;
+
+            var ip = IPAddress.Any;//IPAddress.Parse("192.168.0.2");
+            var port = 3001;
+
+            server = new Media.Rtsp.RtspServer(ip, port)
+            {
+                Logger = new RtspServerConsoleLogger(),
+                ClientSessionLogger = new RtspServerConsoleLogger()
+            };
+
+            //Another one to test over http
+            //string url = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+            string url = "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov";
+
+            RtspSource source = new RtspSource("RtspSourceTest", url);
+            server.TryAddMedia(source);
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -52,26 +71,22 @@ namespace TestAndroidServer
 
         private void FabOnClick(object sender, EventArgs eventArgs)
         {
-            var ip = IPAddress.Any;//IPAddress.Parse("192.168.0.2");
-            var port = 3001;
-
-            using (server = new Media.Rtsp.RtspServer(ip, port)
+            Task.Run(async () =>
             {
-                Logger = new RtspServerConsoleLogger()
-            })
-            {
-                string url = "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov";
-
-                RtspSource source = new RtspSource("RtspSourceTest", url);
-                server.TryAddMedia(source);
-                server.Start();
-                Console.WriteLine("Listening on: " + server.LocalEndPoint);
-            }
+                using (server)
+                {
+                    server.Start();
+                    Console.WriteLine("Listening on: " + server.LocalEndPoint);
+                }
+            });
         }
 
         private void Fab2OnClick(object sender, EventArgs eventArgs)
         {
-            server.Stop();
+            if (server != null)
+            {
+                server.Stop();
+            }
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

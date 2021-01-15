@@ -2612,22 +2612,41 @@ namespace Media.Rtsp
             if (IsConnected.Equals(false)) Connect();
 
             //Send the options if nothing was received before
-            if (m_ReceivedMessages.Equals(0)) using (RtspMessage optionsResponse = SendOptions())
-                {
-                    if (Common.IDisposedExtensions.IsNullOrDisposed(optionsResponse) ||
-                        optionsResponse.ParsedProtocol.Equals(RtspMessage.MessageIdentifier) && // Fake protection from GStreamer
-                        optionsResponse.RtspStatusCode > RtspStatusCode.OK) Media.Common.TaggedExceptionExtensions.RaiseTaggedException(optionsResponse, "Options Response was null or not OK. See Tag.");
-                    else optionsResponse.IsPersistent = false;
-                }
+            try
+            {
+                if (m_ReceivedMessages.Equals(0)) using (RtspMessage optionsResponse = SendOptions())
+                    {
+                        if (Common.IDisposedExtensions.IsNullOrDisposed(optionsResponse) ||
+                            optionsResponse.ParsedProtocol.Equals(RtspMessage.MessageIdentifier) && // Fake protection from GStreamer
+                            optionsResponse.RtspStatusCode > RtspStatusCode.OK) Media.Common.TaggedExceptionExtensions.RaiseTaggedException(optionsResponse, "Options Response was null or not OK. See Tag.");
+                        else optionsResponse.IsPersistent = false;
+                    }
+            }
+            catch
+            {
+                StartPlaying(start, end, mediaTypes);
+                return;
+                //Todo error handling
+            }
+
 
             //Check for automatic disconnect
             if (AutomaticallyDisconnectAfterStartPlaying) Disconnect(true);
 
             //Check if Describe is allowed or that a SessionDescription is present.
-            if (SupportedMethods.Count > 0 && false.Equals(SupportedMethods.Contains(RtspMethod.DESCRIBE.ToString())) &&
-                Common.IDisposedExtensions.IsNullOrDisposed(SessionDescription) && SupportedFeatures.Count.Equals(0))
+            try
             {
-                Media.Common.TaggedExceptionExtensions.RaiseTaggedException(SupportedMethods, "SupportedMethods does not allow Describe and SessionDescription is null. See Tag with SupportedMessages.");
+                if (SupportedMethods.Count > 0 && false.Equals(SupportedMethods.Contains(RtspMethod.DESCRIBE.ToString())) &&
+                    Common.IDisposedExtensions.IsNullOrDisposed(SessionDescription) && SupportedFeatures.Count.Equals(0))
+                {
+                    Media.Common.TaggedExceptionExtensions.RaiseTaggedException(SupportedMethods, "SupportedMethods does not allow Describe and SessionDescription is null. See Tag with SupportedMessages.");
+                }
+            }
+            catch
+            {
+                StartPlaying(start, end, mediaTypes);
+                return;
+                //Todo error handling
             }
 
         Describe:

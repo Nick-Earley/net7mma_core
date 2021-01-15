@@ -289,8 +289,8 @@ namespace Media.Rtsp
         //`Secure` RTSP...
         public const string TcpTransportScheme = "rtspt";
 
-        //The maximum amount of bytes any RtspMessage can contain.
-        public new const int MaximumLength = 4096;
+        //The maximum amount of bytes any RtspMessage can contain. Originally 4096
+        public new const int MaximumLength = 8192;
 
         //String which identifies a Rtsp Request or Response
         public new const string MessageIdentifier = "RTSP";

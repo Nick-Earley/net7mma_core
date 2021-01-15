@@ -16,7 +16,8 @@ namespace TestServerConsoleApp
 
             using (Media.Rtsp.RtspServer server = new Media.Rtsp.RtspServer(ip, port)
             {
-                Logger = new RtspServerConsoleLogger()
+                Logger = new RtspServerConsoleLogger(),
+                ClientSessionLogger = new RtspServerConsoleLogger()
             })
             {
                 string url = "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov";
@@ -27,7 +28,7 @@ namespace TestServerConsoleApp
                 Console.WriteLine("Listening on: " + server.LocalEndPoint);
 
                 var key = Console.ReadKey();
-                while(key.Key != ConsoleKey.Q)
+                while (key.Key != ConsoleKey.Q)
                 {
                     key = Console.ReadKey();
                 }

@@ -818,8 +818,15 @@ namespace Media.Rtsp
                     m_UdpServerSocket = new Socket(addressFamily, SocketType.Dgram, ProtocolType.Udp);
                     m_UdpServerSocket.Bind(inBound = new IPEndPoint(Media.Common.Extensions.Socket.SocketExtensions.GetFirstUnicastIPAddress(addressFamily), port));
 
-                    //Include the IP Header
-                    m_UdpServerSocket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.PacketInformation, true);
+                    try
+                    {
+                        //Include the IP Header
+                        m_UdpServerSocket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.PacketInformation, true);
+                    }
+                    catch (System.Exception e)
+                    {
+                        //TODO Add logging
+                    }
 
                     //Maybe use Peek
                     m_UdpServerSocket.BeginReceiveFrom(Media.Common.MemorySegment.EmptyBytes, 0, 0, SocketFlags.Partial, ref inBound, ProcessAccept, m_UdpServerSocket);
@@ -1307,8 +1314,6 @@ namespace Media.Rtsp
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         internal void RestartFaultedStreams()
         {
-
-
             MediaStreams.Where(s => s.State == RtspSource.StreamState.Started && s.IsReady == false).AsParallel().ForAll((stream) =>
             {
                 Common.ILoggingExtensions.Log(Logger, "Stopping Stream: " + stream.Name + " Id=" + stream.Id);

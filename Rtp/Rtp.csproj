@@ -16,4 +16,13 @@
     <ProjectReference Include="..\Sdp\Sdp.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Mono.Android">
+      <HintPath>E:\VS\VSPro\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v9.0\Mono.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Essentials">
+      <HintPath>E:\Microsoft\Xamarin\NuGet\xamarin.essentials\1.5.3.2\lib\monoandroid90\Xamarin.Essentials.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

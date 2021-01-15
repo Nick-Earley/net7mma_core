@@ -346,63 +346,79 @@ namespace Media.Common.Extensions.Socket
 
         public static void SetMulticastTimeToLive(this System.Net.Sockets.Socket socket, int ttl)
         {
-            switch (socket.AddressFamily)
+            try
             {
-                case System.Net.Sockets.AddressFamily.InterNetwork:
-                    {
-                        socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IP, System.Net.Sockets.SocketOptionName.MulticastTimeToLive, ttl);
+                socket.SetMulticastTimeToLive(ttl);
+                //switch (socket.AddressFamily)
+                //{
+                //    case System.Net.Sockets.AddressFamily.InterNetwork:
+                //        {
+                //            socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IP, System.Net.Sockets.SocketOptionName.MulticastTimeToLive, ttl);
 
-                        return;
-                    }
-                case System.Net.Sockets.AddressFamily.InterNetworkV6:
-                    {
-                        socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IPv6, System.Net.Sockets.SocketOptionName.MulticastTimeToLive, ttl);
+                //            return;
+                //        }
+                //    case System.Net.Sockets.AddressFamily.InterNetworkV6:
+                //        {
+                //            socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IPv6, System.Net.Sockets.SocketOptionName.MulticastTimeToLive, ttl);
 
-                        return;
-                    }
+                //            return;
+                //        }
+                //}
+            }
+            catch
+            {
+                //TODO error handling
             }
         }
 
         public static void JoinMulticastGroup(this System.Net.Sockets.Socket socket, System.Net.IPAddress toJoin)
         {
-            switch (toJoin.AddressFamily)
+            try
             {
-                case System.Net.Sockets.AddressFamily.InterNetwork:
-                    socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IP, System.Net.Sockets.SocketOptionName.AddMembership,
-                                            new System.Net.Sockets.MulticastOption(toJoin));
+                socket.JoinMulticastGroup(toJoin);
+                //switch (toJoin.AddressFamily)
+                //{
+                //    case System.Net.Sockets.AddressFamily.InterNetwork:
+                //        socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IP, System.Net.Sockets.SocketOptionName.AddMembership,
+                //                                new System.Net.Sockets.MulticastOption(toJoin));
 
-                    //socket.MulticastLoopback = false;
+                //        //socket.MulticastLoopback = false;
 
-                    ////Try to specify the multicast adapter to use.
-                    //socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IP,
-                    //        System.Net.Sockets.SocketOptionName.MulticastInterface,
-                    //        Common.Extensions.NetworkInterface.NetworkInterfaceExtensions.GetNetworkInterface(socket).GetIPProperties().GetIPv4Properties().Index);
+                //        ////Try to specify the multicast adapter to use.
+                //        //socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IP,
+                //        //        System.Net.Sockets.SocketOptionName.MulticastInterface,
+                //        //        Common.Extensions.NetworkInterface.NetworkInterfaceExtensions.GetNetworkInterface(socket).GetIPProperties().GetIPv4Properties().Index);
 
-                    //socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IPv6, System.Net.Sockets.SocketOptionName.AddMembership,
-                    //                        new System.Net.Sockets.MulticastOption(toJoin, System.Net.IPAddress.NetworkToHostOrder(Common.Extensions.NetworkInterface.NetworkInterfaceExtensions.GetNetworkInterface(socket).GetIPProperties().GetIPv4Properties().Index)));
+                //        //socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IPv6, System.Net.Sockets.SocketOptionName.AddMembership,
+                //        //                        new System.Net.Sockets.MulticastOption(toJoin, System.Net.IPAddress.NetworkToHostOrder(Common.Extensions.NetworkInterface.NetworkInterfaceExtensions.GetNetworkInterface(socket).GetIPProperties().GetIPv4Properties().Index)));
 
-                    //Call SetMulticastTimeToLive
-                    //socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IP, System.Net.Sockets.SocketOptionName.MulticastTimeToLive, ttl);
+                //        //Call SetMulticastTimeToLive
+                //        //socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IP, System.Net.Sockets.SocketOptionName.MulticastTimeToLive, ttl);
 
-                    break;
-                case System.Net.Sockets.AddressFamily.InterNetworkV6:
-                    socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IPv6, System.Net.Sockets.SocketOptionName.AddMembership,
-                                            new System.Net.Sockets.IPv6MulticastOption(toJoin));
-                    
-                    //socket.MulticastLoopback = false;
+                //        break;
+                //    case System.Net.Sockets.AddressFamily.InterNetworkV6:
+                //        socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IPv6, System.Net.Sockets.SocketOptionName.AddMembership,
+                //                                new System.Net.Sockets.IPv6MulticastOption(toJoin));
 
-                    ////Try to specify the multicast adapter to use.
-                    //socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IPv6,
-                    //        System.Net.Sockets.SocketOptionName.MulticastInterface,
-                    //        Common.Extensions.NetworkInterface.NetworkInterfaceExtensions.GetNetworkInterface(socket).GetIPProperties().GetIPv6Properties().Index);
+                //        //socket.MulticastLoopback = false;
 
-                    //socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IPv6, System.Net.Sockets.SocketOptionName.AddMembership,
-                    //                        new System.Net.Sockets.IPv6MulticastOption(toJoin, System.Net.IPAddress.NetworkToHostOrder(Common.Extensions.NetworkInterface.NetworkInterfaceExtensions.GetNetworkInterface(socket).GetIPProperties().GetIPv6Properties().Index)));
+                //        ////Try to specify the multicast adapter to use.
+                //        //socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IPv6,
+                //        //        System.Net.Sockets.SocketOptionName.MulticastInterface,
+                //        //        Common.Extensions.NetworkInterface.NetworkInterfaceExtensions.GetNetworkInterface(socket).GetIPProperties().GetIPv6Properties().Index);
 
-                    //Call SetMulticastTimeToLive
-                    //socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IPv6, System.Net.Sockets.SocketOptionName.MulticastTimeToLive, ttl);
+                //        //socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IPv6, System.Net.Sockets.SocketOptionName.AddMembership,
+                //        //                        new System.Net.Sockets.IPv6MulticastOption(toJoin, System.Net.IPAddress.NetworkToHostOrder(Common.Extensions.NetworkInterface.NetworkInterfaceExtensions.GetNetworkInterface(socket).GetIPProperties().GetIPv6Properties().Index)));
 
-                    break;
+                //        //Call SetMulticastTimeToLive
+                //        //socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IPv6, System.Net.Sockets.SocketOptionName.MulticastTimeToLive, ttl);
+
+                //        break;
+                //}
+            }
+            catch
+            {
+                //TODO Error Handling
             }
         }
 
@@ -417,36 +433,42 @@ namespace Media.Common.Extensions.Socket
         public static void JoinMulticastGroup(this System.Net.Sockets.Socket socket, System.Net.IPAddress toJoin, int interfaceIndex)
         {
             //if (interfaceIndex == -1) throw new System.InvalidOperationException();
-
-            switch (toJoin.AddressFamily)
+            try
             {
-                case System.Net.Sockets.AddressFamily.InterNetwork:
-                    {
-                        //socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IP, System.Net.Sockets.SocketOptionName.MulticastInterface, interfaceIndex);
+                switch (toJoin.AddressFamily)
+                {
+                    case System.Net.Sockets.AddressFamily.InterNetwork:
+                        {
+                            //socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IP, System.Net.Sockets.SocketOptionName.MulticastInterface, interfaceIndex);
+
+                            socket.SetSocketOption(
+                                System.Net.Sockets.SocketOptionLevel.IP,
+                                System.Net.Sockets.SocketOptionName.AddMembership,
+                                new System.Net.Sockets.MulticastOption(toJoin, interfaceIndex));
+
+                            //Call SetMulticastTimeToLive
+                            //socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IP, System.Net.Sockets.SocketOptionName.MulticastTimeToLive, ttl);
+
+                            return;
+                        }
+                    case System.Net.Sockets.AddressFamily.InterNetworkV6:
+
+                        //socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IPv6, System.Net.Sockets.SocketOptionName.MulticastInterface, interfaceIndex);
 
                         socket.SetSocketOption(
-                            System.Net.Sockets.SocketOptionLevel.IP,
+                            System.Net.Sockets.SocketOptionLevel.IPv6,
                             System.Net.Sockets.SocketOptionName.AddMembership,
-                            new System.Net.Sockets.MulticastOption(toJoin, interfaceIndex));
+                            new System.Net.Sockets.IPv6MulticastOption(toJoin, interfaceIndex));
 
                         //Call SetMulticastTimeToLive
-                        //socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IP, System.Net.Sockets.SocketOptionName.MulticastTimeToLive, ttl);
+                        //socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IPv6, System.Net.Sockets.SocketOptionName.MulticastTimeToLive, ttl);
 
                         return;
-                    }
-                case System.Net.Sockets.AddressFamily.InterNetworkV6:
-
-                    //socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IPv6, System.Net.Sockets.SocketOptionName.MulticastInterface, interfaceIndex);
-
-                    socket.SetSocketOption(
-                        System.Net.Sockets.SocketOptionLevel.IPv6,
-                        System.Net.Sockets.SocketOptionName.AddMembership,
-                        new System.Net.Sockets.IPv6MulticastOption(toJoin, interfaceIndex));
-
-                     //Call SetMulticastTimeToLive
-                    //socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IPv6, System.Net.Sockets.SocketOptionName.MulticastTimeToLive, ttl);
-
-                    return;
+                }
+            }
+            catch
+            {
+                //TODO error handling
             }
         }
 
@@ -457,9 +479,16 @@ namespace Media.Common.Extensions.Socket
         /// <param name="interfaceIndex"></param>
         public static void SetMulticastInterface(this System.Net.Sockets.Socket socket, int interfaceIndex)
         {
-            socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IP, 
-                System.Net.Sockets.SocketOptionName.MulticastInterface, 
-                Common.Binary.IsLittleEndian ? Common.Binary.Reverse32(interfaceIndex) : interfaceIndex);
+            try
+            {
+                socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IP,
+                    System.Net.Sockets.SocketOptionName.MulticastInterface,
+                    Common.Binary.IsLittleEndian ? Common.Binary.Reverse32(interfaceIndex) : interfaceIndex);
+            }
+            catch
+            {
+                //TODO Error handling
+            }
         }
 
         /// <summary>
@@ -497,47 +526,59 @@ namespace Media.Common.Extensions.Socket
         {
             membershipAddress = CreateMembershipAddress(((System.Net.IPEndPoint)socket.LocalEndPoint).Address, toJoin, sourceIp);
 
-            switch (socket.AddressFamily)
+            try
             {
-                case System.Net.Sockets.AddressFamily.InterNetwork:
-                    {
-                        socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IP, 
-                            System.Net.Sockets.SocketOptionName.AddSourceMembership, 
-                            membershipAddress);
+                switch (socket.AddressFamily)
+                {
+                    case System.Net.Sockets.AddressFamily.InterNetwork:
+                        {
+                            socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IP,
+                                System.Net.Sockets.SocketOptionName.AddSourceMembership,
+                                membershipAddress);
 
-                        return;
-                    }
-                case System.Net.Sockets.AddressFamily.InterNetworkV6:
-                    {
-                        socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IPv6, 
-                            System.Net.Sockets.SocketOptionName.AddSourceMembership, 
-                            membershipAddress);
+                            return;
+                        }
+                    case System.Net.Sockets.AddressFamily.InterNetworkV6:
+                        {
+                            socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IPv6,
+                                System.Net.Sockets.SocketOptionName.AddSourceMembership,
+                                membershipAddress);
 
-                        return;
-                    }
+                            return;
+                        }
+                }
             }
-
+            catch
+            {
+                //TODO Error handling
+            }
         }
 
         //should also have index... Group_Req, MGroup_Req
         public static void LeaveMulticastGroup(this System.Net.Sockets.Socket socket, byte[] membershipAddress)
         {
-            switch (socket.AddressFamily)
+            try
             {
-                case System.Net.Sockets.AddressFamily.InterNetwork:
-                    {
-                        socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IP, System.Net.Sockets.SocketOptionName.DropSourceMembership, membershipAddress);
-                        
-                        return;
-                    }
-                case System.Net.Sockets.AddressFamily.InterNetworkV6:
-                    {
-                        socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IPv6, System.Net.Sockets.SocketOptionName.DropSourceMembership, membershipAddress);
-                        
-                        return;
-                    }
+                switch (socket.AddressFamily)
+                {
+                    case System.Net.Sockets.AddressFamily.InterNetwork:
+                        {
+                            socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IP, System.Net.Sockets.SocketOptionName.DropSourceMembership, membershipAddress);
+
+                            return;
+                        }
+                    case System.Net.Sockets.AddressFamily.InterNetworkV6:
+                        {
+                            socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IPv6, System.Net.Sockets.SocketOptionName.DropSourceMembership, membershipAddress);
+
+                            return;
+                        }
+                }
             }
-            
+            catch
+            {
+                //TODO Error handling
+            }
         }
 
         #region Other Values
@@ -588,45 +629,59 @@ namespace Media.Common.Extensions.Socket
 
         public static void LeaveMulticastGroup(this System.Net.Sockets.Socket socket, System.Net.IPAddress toDrop)
         {
-            switch (toDrop.AddressFamily)
+            try
             {
-                case System.Net.Sockets.AddressFamily.InterNetwork:
-                    socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IP, System.Net.Sockets.SocketOptionName.DropMembership,
-                                            new System.Net.Sockets.MulticastOption(toDrop));
+                switch (toDrop.AddressFamily)
+                {
+                    case System.Net.Sockets.AddressFamily.InterNetwork:
+                        socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IP, System.Net.Sockets.SocketOptionName.DropMembership,
+                                                new System.Net.Sockets.MulticastOption(toDrop));
 
-                    //socket.MulticastLoopback = false;
+                        //socket.MulticastLoopback = false;
 
-                    return;
-                case System.Net.Sockets.AddressFamily.InterNetworkV6:
-                    socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IPv6, System.Net.Sockets.SocketOptionName.DropMembership,
-                                            new System.Net.Sockets.IPv6MulticastOption(toDrop));
+                        return;
+                    case System.Net.Sockets.AddressFamily.InterNetworkV6:
+                        socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.IPv6, System.Net.Sockets.SocketOptionName.DropMembership,
+                                                new System.Net.Sockets.IPv6MulticastOption(toDrop));
 
-                    //socket.MulticastLoopback = false;
+                        //socket.MulticastLoopback = false;
 
-                    return;
+                        return;
+                }
+            }
+            catch
+            {
+                //TODO Error handling
             }
         }
 
         public static void LeaveMulticastGroup(this System.Net.Sockets.Socket socket, int interfaceIndex, System.Net.IPAddress toDrop)
         {
-            switch (toDrop.AddressFamily)
+            try
             {
-                case System.Net.Sockets.AddressFamily.InterNetwork:
-                    {
+                switch (toDrop.AddressFamily)
+                {
+                    case System.Net.Sockets.AddressFamily.InterNetwork:
+                        {
+                            socket.SetSocketOption(
+                            System.Net.Sockets.SocketOptionLevel.IP,
+                            System.Net.Sockets.SocketOptionName.DropMembership,
+                            new System.Net.Sockets.MulticastOption(toDrop, interfaceIndex));
+
+                            return;
+                        }
+                    case System.Net.Sockets.AddressFamily.InterNetworkV6:
                         socket.SetSocketOption(
-                        System.Net.Sockets.SocketOptionLevel.IP,
-                        System.Net.Sockets.SocketOptionName.DropMembership,
-                        new System.Net.Sockets.MulticastOption(toDrop, interfaceIndex));
+                            System.Net.Sockets.SocketOptionLevel.IPv6,
+                            System.Net.Sockets.SocketOptionName.DropMembership,
+                            new System.Net.Sockets.IPv6MulticastOption(toDrop, interfaceIndex));
 
                         return;
-                    }
-                case System.Net.Sockets.AddressFamily.InterNetworkV6:
-                    socket.SetSocketOption(
-                        System.Net.Sockets.SocketOptionLevel.IPv6,
-                        System.Net.Sockets.SocketOptionName.DropMembership,
-                        new System.Net.Sockets.IPv6MulticastOption(toDrop, interfaceIndex));
-
-                    return;
+                }
+            }
+            catch
+            {
+                //TODO Error handling
             }
         }
 
@@ -655,9 +710,29 @@ namespace Media.Common.Extensions.Socket
 
         #region Linger
 
-        public static void DisableLinger(System.Net.Sockets.Socket socket) { socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.Socket, System.Net.Sockets.SocketOptionName.DontLinger, true); }
+        public static void DisableLinger(System.Net.Sockets.Socket socket)
+        {
+            try
+            {
+                socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.Socket, System.Net.Sockets.SocketOptionName.DontLinger, true);
+            }
+            catch
+            {
+                //TODO Error handling
+            }
+        }
 
-        public static void EnableLinger(System.Net.Sockets.Socket socket) { socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.Socket, System.Net.Sockets.SocketOptionName.DontLinger, false); }
+        public static void EnableLinger(System.Net.Sockets.Socket socket)
+        {
+            try
+            {
+                socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.Socket, System.Net.Sockets.SocketOptionName.DontLinger, false);
+            }
+            catch
+            {
+                //TODO Error handling
+            }
+        }
 
         public static System.Net.Sockets.LingerOption GetLingerOption(System.Net.Sockets.Socket socket)
         {
@@ -672,7 +747,14 @@ namespace Media.Common.Extensions.Socket
 
         public static void SetLingerOption(System.Net.Sockets.Socket socket, System.Net.Sockets.LingerOption lingerOption)
         {
-            socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.Socket, System.Net.Sockets.SocketOptionName.Linger, lingerOption);
+            try
+            {
+                socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.Socket, System.Net.Sockets.SocketOptionName.Linger, lingerOption);
+            }
+            catch
+            {
+                //TODO Error handling
+            }
         }
 
         public static void SetLingerOption(System.Net.Sockets.Socket socket, bool enable, int seconds)
@@ -878,9 +960,16 @@ namespace Media.Common.Extensions.Socket
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static void EnableTcpOutOfBandDataInLine(System.Net.Sockets.Socket socket)
         {
-            socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.Socket, System.Net.Sockets.SocketOptionName.OutOfBandInline, true);
+            try
+            {
+                socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.Socket, System.Net.Sockets.SocketOptionName.OutOfBandInline, true);
 
-            //SetTcpOption(socket, System.Net.Sockets.SocketOptionName.OutOfBandInline, 1);
+                //SetTcpOption(socket, System.Net.Sockets.SocketOptionName.OutOfBandInline, 1);
+            }
+            catch
+            {
+                //TODO Error handling
+            }
         }
 
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
@@ -952,16 +1041,30 @@ namespace Media.Common.Extensions.Socket
 
         public static void EnableAddressReuse(System.Net.Sockets.Socket socket, bool exclusiveAddressUse = false)
         {
-            socket.ExclusiveAddressUse = exclusiveAddressUse;
+            try
+            {
+                socket.ExclusiveAddressUse = exclusiveAddressUse;
 
-            socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.Socket, System.Net.Sockets.SocketOptionName.ReuseAddress, true);
+                socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.Socket, System.Net.Sockets.SocketOptionName.ReuseAddress, true);
+            }
+            catch
+            {
+                //TODO Error handling
+            }
         }
 
         public static void DisableAddressReuse(System.Net.Sockets.Socket socket, bool exclusiveAddressUse = true)
         {
-            socket.ExclusiveAddressUse = exclusiveAddressUse;
+            try
+            {
+                socket.ExclusiveAddressUse = exclusiveAddressUse;
 
-            socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.Socket, System.Net.Sockets.SocketOptionName.ReuseAddress, false);
+                socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.Socket, System.Net.Sockets.SocketOptionName.ReuseAddress, false);
+            }
+            catch
+            {
+                //TODO Error handling
+            }
         }
 
         #endregion
@@ -976,7 +1079,14 @@ namespace Media.Common.Extensions.Socket
 
         public static void SetUnicastPortReuse(System.Net.Sockets.Socket socket, int value)
         {
-            socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.Socket, ReuseUnicastPortOption, value);
+            try
+            {
+                socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel.Socket, ReuseUnicastPortOption, value);
+            }
+            catch (System.Exception e)
+            {
+                //Todo error handling
+            }
         }
 
         public static void DisableUnicastPortReuse(System.Net.Sockets.Socket socket)
