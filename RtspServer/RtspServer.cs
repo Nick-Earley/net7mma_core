@@ -2219,6 +2219,8 @@ namespace Media.Rtsp
         {
             try
             {
+                //Session DCd before here not: 2, 5 i think its 3
+
                 //Log the reqeust now
                 if (Common.IDisposedExtensions.IsNullOrDisposed(Logger).Equals(false)) Logger.LogRequest(request, session);
 

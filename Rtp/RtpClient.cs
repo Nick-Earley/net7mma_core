@@ -44,7 +44,6 @@ using Media.Rtcp;
 using System.Net.Sockets;
 using System.Net;
 using System.Threading;
-using Xamarin.Essentials;
 
 //Todo, Provide a RtpConference class or integrate the capability to send and recieve to multiple parties
 
@@ -1990,11 +1989,7 @@ namespace Media.Rtp
                     }
                     catch (SocketException ex)
                     {
-                        if (Connectivity.NetworkAccess == NetworkAccess.Internet)
-                        {
-                            // Connection to internet is available
-                            RtpSocket = TrySocketConnect(RtpSocket, RemoteRtp);
-                        }
+                        RtpSocket = TrySocketConnect(RtpSocket, RemoteRtp);
                         //Common.ILoggingExtensions.Log(Logger, "");
                     }
                     catch (Exception ex)
@@ -2068,11 +2063,7 @@ namespace Media.Rtp
                         }
                         catch (SocketException ex)
                         {
-                            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
-                            {
-                                // Connection to internet is available
-                                RtcpSocket = TrySocketConnect(RtcpSocket, RemoteRtcp);
-                            }
+                            RtcpSocket = TrySocketConnect(RtcpSocket, RemoteRtcp);
                             //Common.ILoggingExtensions.Log(Logger, "");
                         }
                         catch (Exception ex)

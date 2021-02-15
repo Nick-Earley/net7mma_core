@@ -4273,8 +4273,7 @@ namespace Media.Rtsp
                                 else if (false.Equals(Common.IDisposedExtensions.IsNullOrDisposed(this)) && false.Equals(SharesSocket))
                                 {
                                     //Check for non fatal exceptions and continue to wait
-                                    if (++attempt <= m_MaximumTransactionAttempts &&
-                                        fatal.Equals(fatal))
+                                    if (++attempt <= m_MaximumTransactionAttempts)// && fatal.Equals(fatal))
                                     {
                                         //We don't share the socket so go to recieve again (note if this is the timer thread this can delay outgoing requests)
                                         goto Wait;
@@ -4458,11 +4457,10 @@ namespace Media.Rtsp
                                         //If the sequence number was present and did not match then log
                                         if (sequenceNumberSent >= 0 && false.Equals(sequenceNumberReceived.Equals(sequenceNumberSent)) && m_LastTransmitted.ParsedProtocol.Equals(m_LastTransmitted.Protocol))
                                         {
-                                            Media.Common.ILoggingExtensions.Log(Logger, InternalId + "SendRtspMessage, response CSeq Does not Match request");
-
                                             //if the message was not in response to a request sent previously and socket is shared
                                             if (m_LastTransmitted.IsComplete.Equals(false))
                                             {
+                                                Media.Common.ILoggingExtensions.Log(Logger, InternalId + "SendRtspMessage, response CSeq Does not Match request");
                                                 if (SharesSocket)
                                                 {
                                                     //Event the message received.
@@ -5955,7 +5953,10 @@ namespace Media.Rtsp
                         default:
                             {
                                 if (Common.IDisposedExtensions.IsNullOrDisposed(this)) return response;
-                                
+
+                                //Temporary change to force auto recon
+                                AutomaticallyReconnect = true;
+
                                 if (AutomaticallyReconnect.Equals(false)) Media.Common.TaggedExceptionExtensions.RaiseTaggedException(this, "Connection Aborted or Reset and AutomaticallyReconnect is false.");
 
                                 Reconnect();

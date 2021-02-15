@@ -71,13 +71,12 @@ namespace TestAndroidServer
 
         private void FabOnClick(object sender, EventArgs eventArgs)
         {
+            //TODO sometimes crashes with A/libc(944): Fatal signal 11 (SIGSEGV), code 2, fault addr 0x79faffdff4 in tid 1044 (Thread-14)
+
             Task.Run(async () =>
             {
-                using (server)
-                {
-                    server.Start();
-                    Console.WriteLine("Listening on: " + server.LocalEndPoint);
-                }
+                server.Start();
+                Console.WriteLine("Listening on: " + server.LocalEndPoint);
             });
         }
 

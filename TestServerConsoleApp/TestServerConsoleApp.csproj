@@ -6,10 +6,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj" />
-    <ProjectReference Include="..\RtspServer\RtspServer.csproj" />
-    <ProjectReference Include="..\Rtsp\Rtsp.csproj" />
-    <ProjectReference Include="..\Sdp\Sdp.csproj" />
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\RtspServer\RtspServer.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Rtsp\Rtsp.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Sdp\Sdp.csproj">
+      <Private>true</Private>
+    </ProjectReference>
   </ItemGroup>
 
 </Project>

@@ -1474,7 +1474,10 @@ namespace Media.Rtp
 
                 ////If the receive was a success
                 //if (available > 0)
-                //{              
+                //{        
+
+                //Socket tcps = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                //tcps.Connect(remote);
 
                 do received += justRecieved = socket.ReceiveFrom(buffer.Array, buffer.Offset + received, buffer.Count - received, System.Net.Sockets.SocketFlags.None, ref remote);
                 while (received.Equals(0) /*|| justRecieved > 0 && received + justRecieved < pmax*/ && socket.Connected);

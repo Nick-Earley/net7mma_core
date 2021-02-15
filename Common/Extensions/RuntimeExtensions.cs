@@ -102,8 +102,8 @@ namespace Media.Common.Extensions
         {
             [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             //TODO: Currently this returns false on xamiran apps
-            //get { return AndroidOSType != null /*|| HasAndroidOS*/; }
-            get { return true; }
+            //get { return true; }
+            get { return AndroidOSType != null /*|| HasAndroidOS*/; }
         }
 
         internal static readonly System.Type WatchKitType = System.Type.GetType("WatchKit");
